@@ -5,25 +5,25 @@ pipeline{
         maven 'Maven3'
     }
     stages {
-      stage ("Cleanup workspace") {
-        steps {
-        cleanWs()
+          stage ("Cleanup workspace") {
+            steps {
+                cleanWs()
+              }
+            }
+          stage ("checkout form SCM") {
+            steps {
+              git branch: 'main' , credentialsID: 'github' , url: 'https://github.com/vinaym10/test-project'
+              }
+            }
+          stage ("Build application") {
+            steps {
+              sh "mvn clean package" 
+                }
+            }
+            stage ("Test application") {
+                steps {
+                  sh "mvn test"
+                }
+            }
       }
-    }
-      stage ("checkout form SCM") {
-        steps {
-          git branch: 'main' , credentialsID: 'github' , url: 'https://github.com/vinaym10/test-project'
-      }
-    }
-      stage ("Build application") {
-        steps {
-          sh "mvn clean package" 
-        }
-    }
-    stage ("Test application") {
-        steps {
-          sh "mvn test"
-        }
-    }
-  }
 }
