@@ -1,21 +1,21 @@
 pipelie{
-  agent { label jenkins-agent }
-  tools {
-    jdk 'java 17'
-    maven 'maven3'
-  }
-  stages {
-    stage("Cleanup workspace"){
-      steps {
-        cleanWs ()
+    agent { label 'jenkins-agent' }
+    tools {
+        jdk 'Java 17'
+        maven 'Maven3'
+    }
+    stages {
+      stage ("Cleanup workspace") {
+        steps {
+        cleanWs()
       }
     }
-    stage ("checkout form SCM") {
-      steps {
-        git branch: 'main' , credentialsID: 'github' , url: 'https://github.com/vinaym10/test-project'
+      stage ("checkout form SCM") {
+        steps {
+          git branch: 'main' , credentialsID: 'github' , url: 'https://github.com/vinaym10/test-project'
       }
     }
-    stage ("Build application") {
+      stage ("Build application") {
         steps {
           sh "mvn clean package" 
         }
